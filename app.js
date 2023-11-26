@@ -41,8 +41,9 @@ app.use((err, req, res, next) => {
 
 //database
 const mongoose = require("mongoose");
-
 mongoose.set("strictQuery", false);
+
+const DATABASE_URL="mongodb+srv://hovominhkhue:<Ilovebino.1!!>@cluster0-b7d8c.mongodb.net/local_library?retryWrites=true&w=majority";
 
 const mongoDB = "mongodb://127.0.0.1/my_database";
 
