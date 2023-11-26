@@ -5,13 +5,15 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+//router
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+const catalogRouter = require("./routes/catalog");
+
 const app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
-
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -22,6 +24,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+// add router
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -52,28 +59,5 @@ main().catch((err)=>console.log(err));
 async function main(){
   await mongoose.connect(mongoDB);
 }
-
-const Schema = mongoose.Schema;
-
-const authorSchema = new Schema({
-  first_name: String,
-  family_name: String,
-  date_of_birth: Date,
-  date_of_death: Date,
-  name: String,
-  lifespan: String,
-  url: {type: String, ref: "Book"},
-});
-
-const bookSchema = new Schema({
-  title: String,
-  author: {type:String, ref:"Author"},
-  summary: String,
-  ISBN: String,
-  url: {type: String, ref: "Author"},
-})
-
-const Author = mongoose.model("Author", authorSchema);
-const Book = mongoose.model("Book", bookSchema);
 
 module.exports = app;
