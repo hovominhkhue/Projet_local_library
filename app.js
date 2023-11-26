@@ -39,4 +39,39 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
+//database
+const mongoose = require("mongoose");
+
+mongoose.set("strictQuery", false);
+
+const mongoDB = "mongodb://127.0.0.1/my_database";
+
+main().catch((err)=>console.log(err));
+async function main(){
+  await mongoose.connect(mongoDB);
+}
+
+const Schema = mongoose.Schema;
+
+const authorSchema = new Schema({
+  first_name: String,
+  family_name: String,
+  date_of_birth: Date,
+  date_of_death: Date,
+  name: String,
+  lifespan: String,
+  url: {type: String, ref: "Book"},
+});
+
+const bookSchema = new Schema({
+  title: String,
+  author: {type:String, ref:"Author"},
+  summary: String,
+  ISBN: String,
+  url: {type: String, ref: "Author"},
+})
+
+const Author = mongoose.model("Author", authorSchema);
+const Book = mongoose.model("Book", bookSchema);
+
 module.exports = app;
