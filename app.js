@@ -48,6 +48,7 @@ const DATABASE_URL="mongodb+srv://hovominhkhue:<Ilovebino.1!!>@cluster0-b7d8c.mo
 const mongoDB = DATABASE_URL;
 
 main().catch((err)=>console.log(err));
+
 async function main(){
   await mongoose.connect(mongoDB);
 }
