@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const Schema = mongoose.Schema;
 
@@ -21,32 +22,39 @@ authorSchema.virtual("url").get(function () {
     return `/catalog/author/${this._id}`;
 });
 
+// Fonction pour définir la date de naissance à partir de la chaîne "DD-MM-YYYY"
+authorSchema.virtual("formattedDateOfBirth").set(function (value) {
+    this.dateOfBirth = moment(value, "DD-MM-YYYY").toDate();
+});
+
+// Fonction pour définir la date de décès à partir de la chaîne "DD-MM-YYYY"
+authorSchema.virtual("formattedDateOfDeath").set(function (value) {
+    this.dateOfDeath = moment(value, "DD-MM-YYYY").toDate();
+});
+
+// Obtenir la date de naissance formatée "DD-MM-YYYY"
 authorSchema.virtual("dateOfBirthFormatted").get(function () {
     if (this.dateOfBirth) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return this.dateOfBirth.toLocaleDateString('en-US', options);
+        return moment(this.dateOfBirth).format("DD-MM-YYYY");
     } else {
-        return "Unknown";
+        return "Input the date of birth in the format DD/MM/YYYY";
     }
 });
 
+// Obtenir la date de décès formatée "DD-MM-YYYY"
 authorSchema.virtual("dateOfDeathFormatted").get(function () {
     if (this.dateOfDeath) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return this.dateOfDeath.toLocaleDateString('en-US', options);
+        return moment(this.dateOfDeath).format("DD-MM-YYYY");
     } else {
-        return "Unknown";
+        return "Input the date of death in the format DD/MM/YYYY";
     }
 });
 
 authorSchema.virtual("lifespan").get(function () {
     if (this.dateOfBirth && this.dateOfDeath) {
-        const birth = new Date(this.dateOfBirth);
-        const death = new Date(this.dateOfDeath);
-        const lifespanInMilliseconds = death - birth;
-        const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25; 
-        const years = lifespanInMilliseconds / millisecondsPerYear;
-        return Math.floor(years);
+        const birthYear = this.dateOfBirth.getYear() + 1900; // Récupère l'année de naissance
+        const deathYear = this.dateOfDeath.getYear() + 1900; // Récupère l'année de décès
+        return deathYear - birthYear; // Calcule la durée de vie
     } else {
         return "Unknown";
     }

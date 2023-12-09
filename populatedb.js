@@ -4,6 +4,8 @@ console.log(
   'mongodb+srv://hovominhkhue:Khueho1206@cluster0.89wkobs.mongodb.net/local_library?retryWrites=true&w=majority'
 );
 
+const moment = require('moment');
+
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
