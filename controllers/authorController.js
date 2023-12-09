@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 // Display list of all Authors.
 exports.author_list = asyncHandler(async (req, res, next) => {
-  const allAuthors = await Author.find().sort({ family_name: 1 }).exec();
+  const allAuthors = await Author.find().sort({ lastName: 1 }).exec();
   res.render("author_list", {
     title: "Author List",
     author_list: allAuthors,
@@ -43,14 +43,14 @@ exports.author_create_get = (req, res, next) => {
 // Handle Author create on POST.
 exports.author_create_post = [
   // Validate and sanitize fields.
-  body("first_name")
+  body("firstName")
     .trim()
     .isLength({ min: 1 })
     .escape()
     .withMessage("First name must be specified.")
     .isAlphanumeric()
     .withMessage("First name has non-alphanumeric characters."),
-  body("family_name")
+  body("lastName")
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -73,8 +73,8 @@ exports.author_create_post = [
 
     // Create Author object with escaped and trimmed data
     const author = new Author({
-      first_name: req.body.first_name,
-      family_name: req.body.family_name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       date_of_birth: req.body.date_of_birth,
       date_of_death: req.body.date_of_death,
     });
@@ -157,14 +157,14 @@ exports.author_update_get = asyncHandler(async (req, res, next) => {
 // Handle Author update on POST.
 exports.author_update_post = [
   // Validate and sanitize fields.
-  body("first_name")
+  body("firstName")
     .trim()
     .isLength({ min: 1 })
     .escape()
     .withMessage("First name must be specified.")
     .isAlphanumeric()
     .withMessage("First name has non-alphanumeric characters."),
-  body("family_name")
+  body("lastName")
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -187,8 +187,8 @@ exports.author_update_post = [
 
     // Create Author object with escaped and trimmed data (and the old id!)
     const author = new Author({
-      first_name: req.body.first_name,
-      family_name: req.body.family_name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       date_of_birth: req.body.date_of_birth,
       date_of_death: req.body.date_of_death,
       _id: req.params.id,
