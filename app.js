@@ -1,9 +1,11 @@
 const express = require("express");
-
 const createError = require("http-errors");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+
+const compression = require("compression");
+const helmet = require("helmet");
 
 //router
 var indexRouter = require("./routes/index");
@@ -19,6 +21,16 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  })
+);
+
+app.use(compression()); // Compress all routes
 
 app.use(express.static(path.join(__dirname, "public")));
 
