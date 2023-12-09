@@ -50,8 +50,7 @@ app.use((err, req, res, next) => {
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const DATABASE_URL="mongodb+srv://hovominhkhue:<Ilovebino.1!!>@cluster0-b7d8c.mongodb.net/local_library?retryWrites=true&w=majority";
-
+const DATABASE_URL="mongodb+srv://hovominhkhue:Khueho1206@cluster0.89wkobs.mongodb.net/?retryWrites=true&w=majority";
 const mongoDB = DATABASE_URL;
 
 main().catch((err)=>console.log(err));
@@ -59,5 +58,6 @@ main().catch((err)=>console.log(err));
 async function main(){
   await mongoose.connect(mongoDB);
 }
+
 
 module.exports = app;
