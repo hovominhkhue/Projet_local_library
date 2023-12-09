@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
+const { DateTime } = require("luxon");
 
 const Schema = mongoose.Schema;
 
@@ -22,39 +22,27 @@ authorSchema.virtual("url").get(function () {
     return `/catalog/author/${this._id}`;
 });
 
-// Fonction pour définir la date de naissance à partir de la chaîne "DD-MM-YYYY"
-authorSchema.virtual("formattedDateOfBirth").set(function (value) {
-    this.dateOfBirth = moment(value, "DD-MM-YYYY").toDate();
-});
-
-// Fonction pour définir la date de décès à partir de la chaîne "DD-MM-YYYY"
-authorSchema.virtual("formattedDateOfDeath").set(function (value) {
-    this.dateOfDeath = moment(value, "DD-MM-YYYY").toDate();
-});
-
-// Obtenir la date de naissance formatée "DD-MM-YYYY"
-authorSchema.virtual("dateOfBirthFormatted").get(function () {
+authorSchema.virtual('date_of_birth_dd_mm_yyyy').get(function () {
     if (this.dateOfBirth) {
-        return moment(this.dateOfBirth).format("DD-MM-YYYY");
+        return DateTime.fromJSDate(this.dateOfBirth).toFormat('dd-MM-yyyy');
     } else {
-        return "Input the date of birth in the format DD/MM/YYYY";
+        return 'Date of birth not specified';
     }
 });
 
-// Obtenir la date de décès formatée "DD-MM-YYYY"
-authorSchema.virtual("dateOfDeathFormatted").get(function () {
+authorSchema.virtual('date_of_death_dd_mm_yyyy').get(function () {
     if (this.dateOfDeath) {
-        return moment(this.dateOfDeath).format("DD-MM-YYYY");
+        return DateTime.fromJSDate(this.dateOfDeath).toFormat('dd-MM-yyyy');
     } else {
-        return "Input the date of death in the format DD/MM/YYYY";
+        return 'Date of death not specified';
     }
 });
 
 authorSchema.virtual("lifespan").get(function () {
     if (this.dateOfBirth && this.dateOfDeath) {
-        const birthYear = this.dateOfBirth.getYear() + 1900; // Récupère l'année de naissance
-        const deathYear = this.dateOfDeath.getYear() + 1900; // Récupère l'année de décès
-        return deathYear - birthYear; // Calcule la durée de vie
+        const birthYear = this.dateOfBirth.getYear() + 1900; 
+        const deathYear = this.dateOfDeath.getYear() + 1900; 
+        return deathYear - birthYear; 
     } else {
         return "Unknown";
     }
