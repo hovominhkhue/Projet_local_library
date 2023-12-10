@@ -57,11 +57,11 @@ exports.author_create_post = [
     .withMessage("Family name must be specified.")
     .isAlphanumeric()
     .withMessage("Family name has non-alphanumeric characters."),
-  body("date_of_birth", "Invalid date of birth")
+  body("dateOfBirth", "Invalid date of birth")
     .optional({ values: "falsy" })
     .isISO8601()
     .toDate(),
-  body("date_of_death", "Invalid date of death")
+  body("dateOfDeath", "Invalid date of death")
     .optional({ values: "falsy" })
     .isISO8601()
     .toDate(),
@@ -75,8 +75,8 @@ exports.author_create_post = [
     const author = new Author({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      date_of_birth: req.body.date_of_birth,
-      date_of_death: req.body.date_of_death,
+      dateOfBirth: req.body.dateOfBirth,
+      dateOfDeath: req.body.dateOfDeath,
     });
 
     if (!errors.isEmpty()) {
@@ -171,11 +171,11 @@ exports.author_update_post = [
     .withMessage("Family name must be specified.")
     .isAlphanumeric()
     .withMessage("Family name has non-alphanumeric characters."),
-  body("date_of_birth", "Invalid date of birth")
+  body("dateOfBirth", "Invalid date of birth")
     .optional({ values: "falsy" })
     .isISO8601()
     .toDate(),
-  body("date_of_death", "Invalid date of death")
+  body("dateOfDeath", "Invalid date of death")
     .optional({ values: "falsy" })
     .isISO8601()
     .toDate(),
@@ -189,8 +189,8 @@ exports.author_update_post = [
     const author = new Author({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      date_of_birth: req.body.date_of_birth,
-      date_of_death: req.body.date_of_death,
+      dateOfBirth: req.body.dateOfBirth,
+      dateOfDeath: req.body.dateOfDeath,
       _id: req.params.id,
     });
 
