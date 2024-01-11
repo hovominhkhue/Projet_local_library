@@ -71,8 +71,9 @@ app.use(limiter);
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const dev_db_url = "mongodb+srv://hovominhkhue:Khueho1206@cluster0.89wkobs.mongodb.net/?retryWrites=true&w=majority";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+//create file .env
+//MONGODB_URI = "mongodb+srv://hovominhkhue:Khueho1206@cluster0.89wkobs.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err)=>console.log(err));
 async function main(){
