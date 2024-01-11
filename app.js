@@ -67,6 +67,8 @@ const limiter = RateLimit({
 // Apply rate limiter to all requests
 app.use(limiter);
 
+require('dotenv').config();
+
 //set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
