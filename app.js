@@ -74,7 +74,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 //create file .env
-//MONGODB_URI = "mongodb+srv://hovominhkhue:Khueho1206@cluster0.89wkobs.mongodb.net/?retryWrites=true&w=majority";
+//MONGODB_URI = "mongodb+srv://hovominhkhue:motdepasse@cluster0.89wkobs.mongodb.net/?retryWrites=true&w=majority";
 const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err)=>console.log(err));
